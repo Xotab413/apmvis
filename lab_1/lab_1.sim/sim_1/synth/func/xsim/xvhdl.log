@@ -1,4 +1,0 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "F:/Data/university/7_sem/apvmis/lab_1/lab_1/lab_1.sim/sim_1/synth/func/xsim/parallel_tb_func_synth.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'alu_gen_paralell'
-INFO: [VRFC 10-163] Analyzing VHDL file "F:/Data/university/7_sem/apvmis/lab_1/lab_1/lab_1.srcs/sim_1/new/parallel_tb.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'parallel_tb'
