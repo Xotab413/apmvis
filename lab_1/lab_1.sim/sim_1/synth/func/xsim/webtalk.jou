@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Thu Sep 14 21:12:57 2023
+# Process ID: 8884
+# Current directory: F:/Data/university/7_sem/apvmis/lab_1/lab_1/lab_1.sim/sim_1/synth/func/xsim
+# Command line: wbtcv.exe -mode batch -source F:/Data/university/7_sem/apvmis/lab_1/lab_1/lab_1.sim/sim_1/synth/func/xsim/xsim.dir/parallel_tb_func_synth/webtalk/xsim_webtalk.tcl -notrace
+# Log file: F:/Data/university/7_sem/apvmis/lab_1/lab_1/lab_1.sim/sim_1/synth/func/xsim/webtalk.log
+# Journal file: F:/Data/university/7_sem/apvmis/lab_1/lab_1/lab_1.sim/sim_1/synth/func/xsim\webtalk.jou
+#-----------------------------------------------------------
+source F:/Data/university/7_sem/apvmis/lab_1/lab_1/lab_1.sim/sim_1/synth/func/xsim/xsim.dir/parallel_tb_func_synth/webtalk/xsim_webtalk.tcl -notrace
