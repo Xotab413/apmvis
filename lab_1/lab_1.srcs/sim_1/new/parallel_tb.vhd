@@ -50,11 +50,11 @@ begin
     UUT:  alu_gen_paralell port map (S=>S, NOT_A=>NOT_A, NOT_B=>NOT_B, M=>M, C_n=>C_n, NOT_F=>NOT_F);
   
   M <= '0';
-  C_n <= '0';
+  C_n <= '1';
   
-  S <= "1001";
-  NOT_A <= std_logic_vector(conv_unsigned(10, 4));
-  NOT_B <= std_logic_vector(conv_unsigned(3, 4));
+  S <= "0011";
+  NOT_A <= std_logic_vector(conv_unsigned(12, 4)); --- 10
+  NOT_B <= std_logic_vector(conv_unsigned(5, 4));   --- 3
   
   
   

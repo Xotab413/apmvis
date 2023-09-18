@@ -85,7 +85,7 @@ architecture synth of alu_gen_paralell is
   );
   
   NOT_F(0) <= (
-        (TEMP_B(0) xor TEMP_A(0)) xor (C_n and NOT_M)
+        (TEMP_B(0) xor TEMP_A(0)) xor (C_n nand NOT_M)
   );
   
   
