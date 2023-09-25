@@ -16,12 +16,12 @@ use STD.TEXTIO.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity parallel_tb is
+entity sequence_tb is
 --  Port ( );
-end parallel_tb;
+end sequence_tb;
 
-architecture Behavioral of parallel_tb is
-    component alu_gen_paralell 
+architecture Behavioral of sequence_tb is
+    component alu_gen_sequence 
             Port (
           S     : in STD_LOGIC_VECTOR (3 DOWNTO 0);
           NOT_A : in STD_LOGIC_VECTOR (3 DOWNTO 0);
@@ -47,14 +47,15 @@ architecture Behavioral of parallel_tb is
       
       
 begin
-    UUT:  alu_gen_paralell port map (S=>S, NOT_A=>NOT_A, NOT_B=>NOT_B, M=>M, C_n=>C_n, NOT_F=>NOT_F);
+    UUT:  alu_gen_sequence port map (S=>S, NOT_A=>NOT_A, NOT_B=>NOT_B, M=>M, C_n=>C_n, NOT_F=>NOT_F);
   
   --M <= '1';
-  --C_n <= '0';
-  --S <= "0010";
-
+  --C_n <= '1';
+  
+  --S <= "0110";
   NOT_A <= std_logic_vector(conv_unsigned(12, 4)); --- 10
   NOT_B <= std_logic_vector(conv_unsigned(5, 4));   --- 3
+  --NOT_A <= "ZZZZ";
   
   
 
@@ -68,7 +69,6 @@ begin
             C_n <= Cn_test;
             M <= M_test;
             S <= std_logic_vector(conv_unsigned(S_test, 4));
-            
         end loop;
       end loop;
     end loop;
