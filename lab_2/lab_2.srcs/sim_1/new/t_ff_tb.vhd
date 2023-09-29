@@ -10,23 +10,22 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity d_ff_tb is
+entity t_ff_tb is
 --  Port ( );
-end d_ff_tb;
+end t_ff_tb;
 
-architecture Behavioral of d_ff_tb is
-	component d_ff is
-		port (
-			D 	 : in 	STD_LOGIC;
-			C 	 : in 	STD_LOGIC;
+architecture Behavioral of t_ff_tb is
+	component t_ff is
+	port (
+			T 	 : in 	STD_LOGIC;
 			NOT_S: in 	STD_LOGIC;
 			NOT_R: in 	STD_LOGIC;
 			Q	 : out 	STD_LOGIC;
 			NOT_Q: out 	STD_LOGIC
 		);
-	end component d_ff;
+	end component t_ff;
 
-	signal D     	 : STD_LOGIC := '0';
+	signal T 		 : STD_LOGIC;
 	signal C     	 : STD_LOGIC := '1';
 	signal NOT_S     : STD_LOGIC;
 	signal NOT_R	 : STD_LOGIC := '1';
@@ -35,7 +34,7 @@ architecture Behavioral of d_ff_tb is
 
 
 begin
-	dff: d_ff port map (D =>D, C=>C, NOT_S=>NOT_S, NOT_R=>NOT_R, Q=>Q, NOT_Q=>NOT_Q);
+	tff: t_ff port map (D =>D, C=>C, NOT_S=>NOT_S, NOT_R=>NOT_R, Q=>Q, NOT_Q=>NOT_Q);
 
 
 	set_tb: process 

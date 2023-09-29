@@ -42,6 +42,6 @@ begin
 	end process;
 
 	Q <= buf;
-	NOT_Q <= not Q;
+	NOT_Q <= not buf;
 
 end Behavioral;

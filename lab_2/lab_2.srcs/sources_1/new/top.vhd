@@ -2,7 +2,7 @@
 -- Company: AssweCan
 -- Create Date: 26.09.2023 21:44:13
 -- Module Name: top - Behavioral
--- Project Name: lab_2 & 3 mb
+-- Project Name: lab_2 & 3
 
 ----------------------------------------------------------------------------------
 
