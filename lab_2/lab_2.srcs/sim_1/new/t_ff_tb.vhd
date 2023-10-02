@@ -25,8 +25,7 @@ architecture Behavioral of t_ff_tb is
 		);
 	end component t_ff;
 
-	signal T 		 : STD_LOGIC;
-	signal C     	 : STD_LOGIC := '1';
+	signal T 		 : STD_LOGIC := '0';
 	signal NOT_S     : STD_LOGIC;
 	signal NOT_R	 : STD_LOGIC := '1';
 	signal Q 		 : STD_LOGIC;
@@ -34,7 +33,7 @@ architecture Behavioral of t_ff_tb is
 
 
 begin
-	tff: t_ff port map (D =>D, C=>C, NOT_S=>NOT_S, NOT_R=>NOT_R, Q=>Q, NOT_Q=>NOT_Q);
+	tff: t_ff port map (T =>T, NOT_S=>NOT_S, NOT_R=>NOT_R, Q=>Q, NOT_Q=>NOT_Q);
 
 
 	set_tb: process 
@@ -54,8 +53,9 @@ begin
 		wait ;
 	end process reset_tb;
 
-	C <= not C after 35 ns;
-	D <= not D after 10 ns;
+
+	T <= not T after 35 ns;
+
 
 
 end Behavioral;
