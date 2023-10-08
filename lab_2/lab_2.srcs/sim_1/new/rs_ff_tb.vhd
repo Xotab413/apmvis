@@ -14,7 +14,7 @@ entity rs_ff_tb is
 --  Port ( );
 end rs_ff_tb;
 
-architecture Behavioral of t_ff_tb is
+architecture Behavioral of rs_ff_tb is
 	component rs_ff is
 	port (
 		C    : in 	STD_LOGIC;
@@ -26,36 +26,31 @@ architecture Behavioral of t_ff_tb is
 	end component rs_ff;
 
 	signal CLK		 : STD_LOGIC := '0';
-	signal S         : STD_LOGIC;
-	signal R    	 : STD_LOGIC := '1';
-	signal Q 		 : STD_LOGIC;
-	signal NOT_Q	 : STD_LOGIC;
+	signal S         : STD_LOGIC := '0';
+	signal R    	 : STD_LOGIC := '0';
+	signal Q 		 : STD_LOGIC ;
+	signal NOT_Q	 : STD_LOGIC ;
 
 
 begin
-	UUT_rs: rs_ff port map (C =>CLK, S=>NOT_S, NOT_R=>NOT_R, Q=>Q, NOT_Q=>NOT_Q);
+	UUT_rs: rs_ff port map (C =>CLK, S=>S, R=>R, Q=>Q, NOT_Q=>NOT_Q);
 
 
-	set_tb: process 
+	CLK <= not CLK after 7 ns;
+
+	main_cycle: process
 	begin
-		NOT_S <= '0';
+
 		wait for 20 ns;
-		NOT_S <= '1';
-		wait ;
-	end process set_tb;
+		for S_test in STD_LOGIC range '0' to '1' loop
+        	for R_test in STD_LOGIC range '0' to '1' loop
+        		S <= S_test;
+        		R <= R_test;
+        		
+        		wait for 15 ns;          
 
-	reset_tb: process 
-	begin
-		wait for 20 ns;
-		NOT_R <= '0';
-		wait for 20 ns;
-		NOT_R <= '1';
-		wait ;
-	end process reset_tb;
-
-
-	T <= not T after 35 ns;
-
-
+        	end loop;
+        end loop;
+    end process main_cycle;
 
 end Behavioral;

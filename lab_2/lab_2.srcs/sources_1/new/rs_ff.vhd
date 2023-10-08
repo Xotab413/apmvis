@@ -32,31 +32,42 @@ architecture Behavioral of rs_ff is
             );
      end component d_ff;
     
-    signal DUMMY,DFF_D : std_logic;
+    signal DFF_D : STD_LOGIC;
+    signal DUMMY : STD_LOGIC := '0';
+    constant VCC : STD_LOGIC := '1'; 
+    signal CLK_RS: STD_LOGIC ;
+    signal buf: STD_LOGIC;
+
 begin
-    rsff: d_ff port map (D=>DFF_D, C=>C, NOT_S=>DUMMY, NOT_R=>DUMMY, Q=>Q, NOT_Q=>NOT_Q);
+    rsff: d_ff port map (D=>DFF_D, C=>CLK_RS, NOT_S=>VCC, NOT_R=>DUMMY, Q=>buf, NOT_Q=>NOT_Q);
+
+    DUMMY <= '1';
 
     process (C) 
     begin
+    	
+
         if rising_edge(C) then
-
-
             -- Remove 'bad' state
             if ((R = '1' and S = '1') or (R = '0' and S = '0')) then        
-                null;
+                DFF_D <= buf;
+                	
             else
                 case (R) is 
-                    when '0' => DFF_D <= '0';
+                    when '1' => DFF_D <= '0';
                     when others => null;
                 end case;
                 case (S) is 
                     when '1' => DFF_D <= '1';
                     when others => null;
-                end case;
+                end case;	
                 
             end if;
         end if;
-
     end process;
+
+
+    CLK_RS <= C;
+    Q<= buf;	
 
 end Behavioral;
