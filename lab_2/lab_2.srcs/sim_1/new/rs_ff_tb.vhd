@@ -35,8 +35,8 @@ architecture Behavioral of rs_ff_tb is
 begin
 	UUT_rs: rs_ff port map (C =>CLK, S=>S, R=>R, Q=>Q, NOT_Q=>NOT_Q);
 
-
 	CLK <= not CLK after 7 ns;
+
 
 	main_cycle: process
 	begin

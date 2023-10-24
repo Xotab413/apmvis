@@ -30,7 +30,7 @@ architecture Behavioral of t_ff is
 			Q	 : out 	STD_LOGIC;
 			NOT_Q: out 	STD_LOGIC
 		);
- end component d_ff;
+ end component d_ff;	
  signal NOT_Q_dff: STD_LOGIC;
 begin
 	tff: d_ff port map (D =>NOT_Q_dff, C=>T, NOT_S=>NOT_S, NOT_R=>NOT_R, Q=>Q, NOT_Q=>NOT_Q_dff);

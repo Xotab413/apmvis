@@ -28,16 +28,19 @@ architecture Behavioral of d_ff is
 begin
 	process (C,NOT_S,NOT_R)
 	begin
+		if ((NOT_R = '0') or (NOT_S = '0')) then
 		case (NOT_S) is
 			when '0' => buf <= '1';	
 			when others => null;
-		end case;
+		end case;	
 		case (NOT_R) is
 			when '0' => buf <= '0';	
 			when others => null;
 		end case;
+		else
 		if rising_edge(C) then
 			buf <= D;
+		end if;
 		end if;
 	end process;
 
