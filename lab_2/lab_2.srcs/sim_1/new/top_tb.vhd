@@ -31,7 +31,8 @@ architecture Behavioral of top_tb is
 		);
 	end component top;
 
-	signal OE,CCLR,RCLK,RCO : STD_LOGIC := '1';
+	signal OE,CCLR,RCLK : STD_LOGIC := '1';
+	signal RCO : STD_LOGIC;
 	signal CCLK : STD_LOGIC := '1';
 	signal CCKEN: STD_LOGIC := '1';
 	signal Q : STD_LOGIC_VECTOR (7 DOWNTO 0);
@@ -51,8 +52,14 @@ begin
 		RCLK <= not CCLK;
 	end process delay;
 
-
-
+	--cnt_dis: process
+	--begin
+	--	wait for 300 ns;
+	--	CCKEN <= '1';
+	--	wait for 120 ns;
+	--	CCKEN <= '0';
+	--end process cnt_dis;
+	
 	reset_clk: process 
 	begin
 		--wait for 10 ns;

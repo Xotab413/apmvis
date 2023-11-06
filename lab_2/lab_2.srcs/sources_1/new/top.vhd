@@ -57,7 +57,6 @@ architecture Behavioral of top is
 	signal Something : STD_LOGIC;
 	signal CCLR_buf : STD_LOGIC := '0';
 
-	signal rco_vr: std_logic := '1';
 	signal temp,temp1,temp2,temp3,temp4,temp5,temp6: std_logic;
 begin
 
@@ -80,7 +79,7 @@ begin
 		TT_LINE(0) <= buf;
     	TT_LINE(1) <= buf and TQ_LINE(0);
     	
-    	-- THIS way won't be work bcs 2 simultaniously transaction in a time, that's why we had delay ;3
+    	-- THIS way won't be work bcs 2 simultaniously transaction in a time, that's why we had delay and a LOT lines of code;3
 			--for i in 2 to 7 loop
 			--	temp := TT_LINE(i-1);
 			--	TT_LINE(i) <=  (temp and TQ_LINE(i-1));
@@ -162,12 +161,13 @@ begin
 	
 
 	rco_cnt: process (TQ_LINE)
-	
+	variable rco_vr : std_logic;
 	begin
-		for i in 0 to 7 loop
-			rco_vr <= rco_vr and TQ_LINE(i);
+		rco_vr := TQ_LINE(0);
+		for i in 1 to 7 loop
+			rco_vr := rco_vr and TQ_LINE(i);
 		end loop;
 		RCO <= not rco_vr;
-	end process rco_cnt;
+	end process rco_cnt;	
 
 end Behavioral;
