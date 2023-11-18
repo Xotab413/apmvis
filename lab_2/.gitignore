@@ -19,6 +19,9 @@
 *#
 *.txt
 
+# Ignore test_file
+!docs/*.txt
+
 # Ignore sendboxes
 prj*/
 
