@@ -11,17 +11,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="145601fs"></ZoomEndTime>
-      <Cursor1Time time="20000fs"></Cursor1Time>
+      <ZoomEndTime time="600001fs"></ZoomEndTime>
+      <Cursor1Time time="360088fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="164"></NameColumnWidth>
-      <ValueColumnWidth column_width="74"></ValueColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="12" />
-   <wave_markers>
-      <marker time="5140000" label="" />
-   </wave_markers>
+   <WVObjectSize size="8" />
    <wvobject fp_name="/top_tb/OE" type="logic">
       <obj_property name="ElementShortName">OE</obj_property>
       <obj_property name="ObjectShortName">OE</obj_property>
@@ -51,25 +48,25 @@
       <obj_property name="ObjectShortName">Q[7:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_tb/UUT/TT_LINE" type="array">
-      <obj_property name="ElementShortName">TT_LINE[7:0]</obj_property>
-      <obj_property name="ObjectShortName">TT_LINE[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/UUT/TQ_LINE" type="array">
-      <obj_property name="ElementShortName">TQ_LINE[7:0]</obj_property>
-      <obj_property name="ObjectShortName">TQ_LINE[7:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/UUT/RSQ_LINE" type="array">
-      <obj_property name="ElementShortName">RSQ_LINE[7:0]</obj_property>
-      <obj_property name="ObjectShortName">RSQ_LINE[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/UUT/TNQ_LINE" type="array">
-      <obj_property name="ElementShortName">TNQ_LINE[7:0]</obj_property>
-      <obj_property name="ObjectShortName">TNQ_LINE[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/some" type="logic">
-      <obj_property name="ElementShortName">some</obj_property>
-      <obj_property name="ObjectShortName">some</obj_property>
+   <wvobject fp_name="group25" type="group">
+      <obj_property name="label">debug_lines</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/top_tb/UUT/TT_LINE" type="array">
+         <obj_property name="ElementShortName">TT_LINE[7:0]</obj_property>
+         <obj_property name="ObjectShortName">TT_LINE[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_tb/UUT/TQ_LINE" type="array">
+         <obj_property name="ElementShortName">TQ_LINE[7:0]</obj_property>
+         <obj_property name="ObjectShortName">TQ_LINE[7:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_tb/UUT/RSQ_LINE" type="array">
+         <obj_property name="ElementShortName">RSQ_LINE[7:0]</obj_property>
+         <obj_property name="ObjectShortName">RSQ_LINE[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_tb/UUT/TNQ_LINE" type="array">
+         <obj_property name="ElementShortName">TNQ_LINE[7:0]</obj_property>
+         <obj_property name="ObjectShortName">TNQ_LINE[7:0]</obj_property>
+      </wvobject>
    </wvobject>
 </wave_config>

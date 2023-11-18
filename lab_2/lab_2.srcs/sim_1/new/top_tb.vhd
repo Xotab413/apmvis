@@ -14,6 +14,7 @@ use ieee.std_logic_textio.all;
 use std.textio.all;
 
 entity top_tb is
+	generic (PERIOD : time := 20 ns);
 --  Port ( );
 end top_tb;
 
@@ -35,17 +36,17 @@ architecture Behavioral of top_tb is
 
 
 
-	function chr2lgck(chr: character) return STD_LOGIC is
-    begin
-  		case chr is
-   			when '0' =>
-      			return '0';
-    		when '1' =>
-      			return '1';
-    		when others =>
-      			return 'U';
-  		end case;
-    end;
+function vec2string ( a: std_logic_vector) return string is
+	variable b : string (1 to a'length) := (others => NUL);
+	variable stri : integer := 1; 
+	begin
+	    for i in a'range loop
+	        b(stri) := std_logic'image(a((i)))(2); -- (1) will return ''
+	   		stri := stri+1;
+	    end loop;
+	return b;
+	end function vec2string;
+
 
     procedure skipSpaces(line_data: inout line; numOfspaces: integer) is
     variable char : character;
@@ -58,8 +59,9 @@ architecture Behavioral of top_tb is
 
 
 
+    -- /#| OE | CCKEN | CCLR | RCO | Q_file | #\ 
+	file test_input : text open read_mode is "F:/lab3_inpt.txt";
 
-	file test_input : text open read_mode is "F:/some.txt";
 	signal OE,CCLR,RCLK : STD_LOGIC := '1';
 	signal RCO : STD_LOGIC;
 	signal CCLK : STD_LOGIC := '1';
@@ -67,9 +69,6 @@ architecture Behavioral of top_tb is
 	signal Q : STD_LOGIC_VECTOR (7 DOWNTO 0);
 	shared variable Q_buf : STD_LOGIC_VECTOR (7 DOWNTO 0);
 	shared variable OE_buf,CCKEN_buf,CCLR_buf: STD_LOGIC;
-	signal some: std_logic;
-	signal mutex: std_logic := '0';
-	signal starup: std_logic := '0';
 begin
 
 	UUT: top port map (
@@ -77,133 +76,113 @@ begin
 		CCLR=> CCLR, RCO => RCO, Q => Q);
 
 
-	--BAD: top port map (
-	--	OE => OE, RCLK => RCLK, CCKEN=>CCKEN, CCLK=> CCLK, 
-	--	CCLR=> CCLR, RCO => RCO, Q => Q);
-	starup <= '1';
-	--CCLR <= '1';
-		
-	process (starup) 
-	begin 
-		CCLR <= '0';
-		mutex <= '1';
-	end process;
+	CCLK <= not CCLK after PERIOD/2; -- freerun clk
+	RCLK <= not CCLK;				 -- for register line
+	-- Notice that we can use our rclk in main tb to provide output from 1/2 lines, but i'm so lazy-bazy ;3
 
-	--process (Q)
+	--main_tb_pr: process 
 	--begin
-	--	if (Q = "1000011") then
-	--		mutex <= '1';
-	--	end if ;
-	--end process;
+	--	OE <= '0';
+	--	CCLR <= '0';
+	--	wait for PERIOD/2;
+	--	CCLR <= '1';
+	--	wait for PERIOD;
 
-
-	delay: process 
-	begin
-		wait for 10 ns;
-
-		CCLK <= not CCLK after 10 ns;
-		RCLK <= not CCLK;
-	end process delay;
-
-	--cnt_dis: process
-	--begin
-	--	wait for 300 ns;
-	--	CCKEN <= '1';
-	--	wait for 120 ns;
+	--	-- cnt MAHN
 	--	CCKEN <= '0';
-	--end process cnt_dis;
+	--	wait for PERIOD*5;
 
-	reset_clk: process (mutex)
-	begin
-		--wait for 10 ns;
-		if (mutex = '1') then
-			CCLR <= '1';
-		end if;
+	--	--disable_cnt )
+	--	CCKEN <= '1';
+	--	wait for PERIOD*4;
+
+	--	-- cnt MANN part-2
+	--	CCKEN <= '0';
+	--	wait for PERIOD*5;
+
+	--	-- CLEAR MANN
+	--	CCLR <= '0';
+	--	wait for PERIOD/2;
+	--	CCLR <= '1';
+	--	wait for PERIOD*3;
+
+	--	-- Z - state CHEECK
+	--	OE <= '1';
+	--	wait for PERIOD*2;
+
+	--	wait;
+	--end process main_tb_pr;
+
+
+	--file_wr: process
+
+	--variable line_data: line;
+	--begin
+	--	wait for PERIOD/2;
+	--	write(line_data, OE);
+	--	write(line_data, (CCKEN),right, 2);
+	--	write(line_data, (CCLR),right, 2);
+	--	write(line_data, (RCO),right, 2);
+
+	--	write(line_data, (Q),right, 16);
+
+	--	writeline(test_input, line_data);
 		
-		
-	end process reset_clk;
+	--end process file_wr;
 
-	cnt_clk: process 
-	begin
-		wait for 10 ns;
-		OE <= '0';
-		CCKEN <= '0';
-		wait;
+	file_rd: process
 
-	end process cnt_clk;
-
-  	-- OE, CCKEN, CLR
-  	--
-	file_tb	: process
-
-	variable time: integer := 0;
-	variable inpt_val : character;
+	variable OE_f,CCKEN_f,CCLR_f,RCO_f : STD_LOGIC;
+	variable Q_f: STD_LOGIC_VECTOR (7 DOWNTO 0);
 	variable line_data: line;
-	variable numOfspaces: integer;
+	variable line_num : integer := 0;
 	begin
-		wait for 10 ns;
-		--write(line_data, OE);
-		--write(line_data, (CCKEN),right, 2);
-		--write(line_data, (CCLR),right, 4);
-		--write(line_data, (RCO),right, 5);
-		--#write(line_data, Q,right,15);
-		--#write(line_data, RCO,right, 2);
-		 --write(line_data, std_logic'image(RCO) & " " & std_logic_vector'image(Q));
-        --#writeline(test_input, line_data);
+
 		file_chill :  while not endfile(test_input) loop
-		        readline(test_input, line_data);
-		        read(line_data, OE_buf);
-		        skipSpaces(line_data, 7);
-		        read(line_data, Q_buf);
-		        skipSpaces(line_data, 1);
-		        read(line_data, CCKEN_buf);
-		        --line_run: for i in line_data'range loop
-		        --	read(line_data, inpt_val);
-		        --	case (i) is 
-		        --		when 1 => OE_buf <= chr2lgck(inpt_val);
-		        --		when others => null;
 
-		        --	end case;
-		        			
-		       	--end loop line_run;
+		    line_num := line_num + 1;
+		    readline(test_input, line_data);
 
+		    if line_data.all'length = 0 or line_data.all(1) = '/' then
+                next;
+            end if;
 
-		        --some <= inpt_val(1);
-		--        XX_s<= vector_value_XX;
-		--        --XX_s(10)<=CLK_S;
-		--        if file_line.all'length = 0 or file_line.all(1) = '#' then
-  --              	next;
-  --          	end if;                        
-		--        wait for 10 ns;
-		--        time:= time + 10;
-		--        if YY_1_s /= YY_2_s then 
-		--        	report "[WRONG] Different work on: " & integer'image(time) & "ns";
-		--       		notSame <= TRUE;
-		--        else
-		--        	report "[OK] Expected work on: " & integer'image(time) & "ns";
-		--        end if;
-	        end loop file_chill;
-	 --       if notSame = TRUE then
-	 --       	report "[OK] Results are not the same!";
-	 --       end if;
-	 --       if notSame = FALSE then
-	 --           report "[ALL] [OK] All results are the same!";
-	 --       end if;       
-	        --file_close(test_input);
+		    read(line_data, OE_f);
+		    skipSpaces(line_data, 1);
+		    read(line_data, CCKEN_f);
+		    skipSpaces(line_data, 1);
+		    read(line_data, CCLR_f);
 
-	       --some <= inpt_val(0);
+		    skipSpaces(line_data, 1);
+		    read(line_data, RCO_f);
 
-	end process file_tb;
+		    skipSpaces(line_data, 8);
+		    read(line_data, Q_f);
+
+		    OE <= OE_f;
+		    CCKEN <= CCKEN_f;
+		    CCLR <= CCLR_f;
+
+		  	wait for PERIOD/2;
 
 
+			assert (Q = Q_f)
+                report "Q_f failed. "
+                        & "Expected: " & vec2string(Q)
+                        & ". Actual: " & vec2string(Q_f)
+                        & ". Line: " & integer'image(line_num)
+                severity ERROR;
+
+            assert (RCO = RCO_f)
+                report "RCO_f failed. "
+                        & "Expected: " & std_logic'image(RCO)
+                        & ". Actual: " & std_logic'image(RCO_f)
+                        & ". Line: " & integer'image(line_num)
+                severity ERROR;    
+
+		end loop file_chill;
+		file_close(test_input);
 
 
-
-
-
-
-
-
-
-
+	end process file_rd;
 end Behavioral;
