@@ -59,3 +59,8 @@ set_property PACKAGE_PIN T19 [get_ports uart_tx]
 set_property IOSTANDARD LVCMOS18 [get_ports uart_tx]
 set_property PACKAGE_PIN U19 [get_ports uart_rx]
 set_property IOSTANDARD LVCMOS18 [get_ports uart_rx]
+
+
+set_property CFGBVS GND [current_design]
+set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
+set_property ALLOW_COMBINATORIAL_LOOPS TRUE [get_nets div/buf_reg]

@@ -21,29 +21,29 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity divider is
+generic(div_value : integer := 20000000);
     Port ( CLK_IN : in STD_LOGIC;
            CLK_OUT : out STD_LOGIC);
 end divider;
 
 architecture Behavioral of divider is
-    signal i: integer := 0;
-    signal temp: std_logic := '0';
-    
-    constant divide_value: integer := 200000000;
+    signal clk_counter_value : std_logic_vector (31 downto 0) := X"00000000";
+    signal curr_clk_out : std_logic := '0'; 
 begin
-    process (CLK_IN)
-    begin
-        if CLK_IN' event and CLK_IN = '1' then
-            if (i = divide_value) then
-                i <= 0;
-                temp <= not temp;
-            else i <= i + 1;
-            end if;
+process(clk_in)
+begin
+    if (rising_edge(clk_in)) then
+        if (clk_counter_value = (div_value - 1)) then
+            clk_counter_value <= X"00000000";
+            curr_clk_out <= not curr_clk_out;
+        else
+            clk_counter_value <= clk_counter_value + 1;
         end if;
-    end process;
-    
-    CLK_OUT <= temp;       
+    end if;
+end process;
+clk_out <= curr_clk_out;   
 end Behavioral;

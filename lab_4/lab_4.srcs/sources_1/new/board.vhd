@@ -22,6 +22,11 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
+library UNISIM;
+use UNISIM.vcomponents.all;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.numeric_std.ALL;
 
 entity board is
     Port ( 
@@ -66,16 +71,37 @@ architecture Behavioral of board is
 
     signal CLOCK, NOT_CLOCK: std_logic;
     signal Q : std_logic_vector (7 DOWNTO 0);
-    signal CLK_NO_DIV : std_logic;
+    signal CLK_NO_DIV,RCO,RCKEN,RCLK_int : std_logic;
 begin
+
+
+  IBUFDS_inst : IBUFDS
+
+    port map (
+       O =>  CLK_NO_DIV,  -- Buffer output
+       I =>  sysclk_p,  -- Diff_p buffer input (connect directly to top-level port)
+       IB => sysclk_n -- Diff_n buffer input (connect directly to top-level port)
+    );
+
+    RCKEN <= (pushbuttons(3));
+    
+    RCLK_EN: process(RCKEN) begin
+        if (RCKEN = '1') then
+            RCLK_int <= NOT_CLOCK;
+         else 
+            RCLK_int <= '0';
+         end if;
+        
+    end process RCLK_EN;
+    
     NOT_CLOCK <= not(CLOCK);
 
     counter: top port map (
         OE => not(pushbuttons(0)), 
-        RCLK => NOT_CLOCK, 
+        RCLK => RCLK_int, 
         CCKEN=>not(pushbuttons(1)), 
         CCLK=> CLOCK, 
-        CCLR=> pushbuttons(2), 
+        CCLR=> not pushbuttons(2), 
         RCO => RCO, 
         Q => Q
     );
@@ -90,11 +116,6 @@ begin
     ledsboard(2) <= Q(6);
     ledsboard(3) <= Q(7);
 
-    buffds: ibufds port map (
-        i => sysclk_p, 
-        ib => sysclk_n, 
-        o => CLK_NO_DIV
-    );
     
     div: divider port map (
         CLK_IN => CLK_NO_DIV, 
